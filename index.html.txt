@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Himkristelle & Nilovelle | Fashion Store</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    /* Basic reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      background: #0b0b10;
+      color: #f9fafb;
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    /* Layout helpers */
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(16px);
+      background: rgba(5, 5, 10, 0.85);
+      border-bottom: 1px solid rgba(148, 163, 184, 0.3);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 0;
+    }
+
+    .logo {
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      font-size: 1.1rem;
+      text-transform: uppercase;
+    }
+
+    .logo span {
+      color: #f97316;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      font-size: 0.95rem;
+    }
+
+    .nav-links a {
+      position: relative;
+      padding-bottom: 0.1rem;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -0.1rem;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #f97316, #22c55e);
+      transition: width 0.2s ease-out;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    /* Hero section */
+    .hero {
+      padding: 3.5rem 0 2.5rem 0;
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.2rem 0.8rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.13em;
+      color: #e5e7eb;
+      margin-bottom: 1rem;
+    }
+
+    .badge-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 30%, #f97316, #22c55e);
+    }
+
+    .hero h1 {
+      font-size: clamp(2.4rem, 4vw, 3.4rem);
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+
+    .hero h1 span {
+      background: linear-gradient(120deg, #f97316, #22c55e, #06b6d4);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero p {
+      font-size: 0.98rem;
+      color: #9ca3af;
+      max-width: 30rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      padding: 0.7rem 1.5rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      font-size: 0.9rem;
+      cursor: pointer;
+      background: transparent;
+      color: #f9fafb;
+      transition:
+        background 0.2s ease-out,
+        color 0.2s ease-out,
+        border-color 0.2s ease-out,
+        transform 0.15s ease-out;
+    }
+
+    .btn-primary {
+      background: linear-gradient(120deg, #f97316, #22c55e);
+      border-color: transparent;
+      color: #0f172a;
+      font-weight: 600;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 40px rgba(15, 23, 42, 0.6);
+    }
+
+    .btn-outline:hover {
+      background: rgba(15, 23, 42, 0.9);
+      border-color: #f97316;
+    }
+
+    .hero-meta {
+      display: flex;
+      gap: 1.5rem;
+      margin-top: 1rem;
+      font-size: 0.8rem;
+      color: #9ca3af;
+    }
+
+    .hero-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .hero-meta span strong {
+      color: #e5e7eb;
+    }
+
+    .hero-visual {
+      position: relative;
+      min-height: 260px;
+      border-radius: 1.5rem;
+      overflow: hidden;
+      background: radial-gradient(circle at 10% 0%, #f97316, #0b0b10 40%), radial-gradient(circle at 90% 100%, #22c55e, #0b0b10 40%);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      box-shadow: 0 20px 60px rgba(15, 23, 42, 0.9);
+    }
+
+    .hero-visual-layer {
+      position: absolute;
+      inset: 0;
+      mix-blend-mode: lighten;
+      opacity: 0.8;
+      background-image:
+        radial-gradient(circle at 10% 20%, rgba(248, 250, 252, 0.18) 0, transparent 50%),
+        radial-gradient(circle at 70% 80%, rgba(248, 250, 252, 0.12) 0, transparent 45%);
+    }
+
+    .hero-card {
+      position: absolute;
+      inset: 1.2rem;
+      border-radius: 1.1rem;
+      background: rgba(15, 23, 42, 0.82);
+      backdrop-filter: blur(24px);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      padding: 1.2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .hero-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .hero-tag {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: #9ca3af;
+    }
+
+    .hero-collection-badge {
+      font-size: 0.7rem;
+      border-radius: 999px;
+      padding: 0.2rem 0.7rem;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(248, 250, 252, 0.16);
+    }
+
+    .hero-models {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.6rem;
+      margin-bottom: 1rem;
+    }
+
+    .hero-model {
+      aspect-ratio: 3 / 4;
+      border-radius: 0.9rem;
+      background: linear-gradient(140deg, rgba(248, 250, 252, 0.06), rgba(15, 23, 42, 0.95));
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+      padding: 0.5rem;
+      font-size: 0.7rem;
+      color: #e5e7eb;
+    }
+
+    .hero-model-label {
+      background: rgba(15, 23, 42, 0.9);
+      border-radius: 999px;
+      padding: 0.1rem 0.5rem;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+    }
+
+    .hero-card-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: #9ca3af;
+    }
+
+    .hero-pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.4rem;
+    }
+
+    .hero-pill {
+      border-radius: 999px;
+      padding: 0.14rem 0.6rem;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      font-size: 0.7rem;
+    }
+
+    .hero-price-tag {
+      font-size: 0.9rem;
+      color: #e5e7eb;
+    }
+
+    .hero-price-tag span {
+      color: #22c55e;
+      font-weight: 600;
+    }
+
+    /* Section headings */
+    section {
+      padding: 2.5rem 0;
+      border-top: 1px solid rgba(55, 65, 81, 0.7);
+    }
+
+    section h2 {
+      font-size: 1.4rem;
+      margin-bottom: 0.3rem;
+    }
+
+    section p.section-subtitle {
+      font-size: 0.9rem;
+      color: #9ca3af;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Category grid */
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      border-radius: 1rem;
+      background: radial-gradient(circle at 0 0, rgba(248, 250, 252, 0.06), rgba(15, 23, 42, 0.98));
+      border: 1px solid rgba(75, 85, 99, 0.9);
+      padding: 1.2rem;
+      box-shadow: 0 18px 35px rgba(15, 23, 42, 0.9);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card h3 {
+      font-size: 1rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .card p {
+      font-size: 0.84rem;
+      color: #9ca3af;
+      margin-bottom: 0.6rem;
+    }
+
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      font-size: 0.76rem;
+    }
+
+    .tag {
+      padding: 0.18rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+    }
+
+    .card-cta {
+      margin-top: 0.8rem;
+      font-size: 0.8rem;
+      color: #e5e7eb;
+      opacity: 0.85;
+    }
+
+    /* Product list */
+    .product-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1.2rem;
+      margin-top: 1rem;
+    }
+
+    .product-card {
+      border-radius: 0.9rem;
+      padding: 0.8rem;
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      background: rgba(15, 23, 42, 0.95);
+      font-size: 0.8rem;
+    }
+
+    .product-card h4 {
+      font-size: 0.85rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .product-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: #9ca3af;
+      margin-bottom: 0.3rem;
+    }
+
+    .product-price {
+      color: #22c55e;
+      font-size: 0.8rem;
+    }
+
+    /* Collections chips */
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.7rem;
+      font-size: 0.76rem;
+    }
+
+    .chip {
+      border-radius: 999px;
+      padding: 0.2rem 0.7rem;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      color: #e5e7eb;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid rgba(55, 65, 81, 0.9);
+      padding: 1.8rem 0 2.2rem 0;
+      font-size: 0.8rem;
+      color: #9ca3af;
+    }
+
+    .footer-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.2rem;
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 768px) {
+      .nav {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.6rem;
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-visual {
+        order: -1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container nav">
+      <div class="logo">
+        HIMKRI<span>STELLE</span> &amp; NILO<span>VELLE</span>
+      </div>
+      <nav class="nav-links">
+        <a href="#collections">Collections</a>
+        <a href="#traditional">Traditional</a>
+        <a href="#western">Western</a>
+        <a href="#genz">Gen Z</a>
+        <a href="#accessories">Accessories</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <main class="container">
+    <section class="hero">
+      <div class="hero-content">
+        <div class="badge">
+          <span class="badge-dot"></span>
+          Curated from Dibrugarh to the world
+        </div>
+        <h1>
+          Himkristelle &amp; Nilovelle
+          <br />
+          <span>Tradition × Street × Luxury</span>
+        </h1>
+        <p>
+          Explore Indian traditional fits, western basics, and bold Gen Z drops in one place.
+          Sarees, kurtas, co-ords, tees, denim, sneakers, watches – all styled for today.
+        </p>
+
+        <div class="hero-actions">
+          <button class="btn btn-primary" onclick="scrollToSection('collections')">
+            Shop collections →
+          </button>
+          <button class="btn btn-outline" onclick="scrollToSection('accessories')">
+            View shoes &amp; watches
+          </button>
+        </div>
+
+        <div class="hero-meta">
+          <span><strong>Free styling tips</strong> with every lookbook</span>
+          <span>Indo–Western, streetwear, campus fits, party edits</span>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="hero-visual-layer"></div>
+        <div class="hero-card">
+          <div class="hero-card-top">
+            <div>
+              <div class="hero-tag">Live drop · Summer ‘26</div>
+              <div style="margin-top:0.2rem;font-size:0.9rem;color:#e5e7eb;">Assam to Mumbai: culture remix</div>
+            </div>
+            <div class="hero-collection-badge">
+              Curated by Himangshu
+            </div>
+          </div>
+
+          <div class="hero-models">
+            <div class="hero-model">
+              <div class="hero-model-label">Traditional · Saree set</div>
+            </div>
+            <div class="hero-model">
+              <div class="hero-model-label">Western · Denim &amp; tee</div>
+            </div>
+            <div class="hero-model">
+              <div class="hero-model-label">Gen Z · Oversized fit</div>
+            </div>
+          </div>
+
+          <div class="hero-card-bottom">
+            <div>
+              <div>Featured categories</div>
+              <div class="hero-pill-row">
+                <div class="hero-pill">Sarees</div>
+                <div class="hero-pill">Kurtas &amp; sets</div>
+                <div class="hero-pill">Dresses</div>
+                <div class="hero-pill">Co-ords</div>
+                <div class="hero-pill">Sneakers</div>
+                <div class="hero-pill">Watches</div>
+              </div>
+            </div>
+            <div class="hero-price-tag">
+              Starting from <span>₹699</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Collections overview -->
+    <section id="collections">
+      <h2>All collections</h2>
+      <p class="section-subtitle">
+        Browse by vibe – pure traditional, clean western basics, or Gen Z street styles with all your essentials like shoes, pants, and watches.
+      </p>
+
+      <div class="category-grid">
+        <article class="card">
+          <h3>Indian traditional</h3>
+          <p>Classic silhouettes, rich fabrics, and festival-ready looks inspired by North East to pan-India styles.</p>
+          <div class="card-tags">
+            <span class="tag">Sarees</span>
+            <span class="tag">Lehenga sets</span>
+            <span class="tag">Salwar suits</span>
+            <span class="tag">Kurtas &amp; kurtis</span>
+          </div>
+          <div class="card-cta">Perfect for weddings, puja, and family functions.</div>
+        </article>
+
+        <article class="card">
+          <h3>Western edits</h3>
+          <p>Everyday fits with denim, shirts, dresses, and jackets styled for work, college, and weekends.</p>
+          <div class="card-tags">
+            <span class="tag">Jeans &amp; pants</span>
+            <span class="tag">T-shirts &amp; polos</span>
+            <span class="tag">Shirts</span>
+            <span class="tag">Dresses &amp; skirts</span>
+          </div>
+          <div class="card-cta">Build a capsule wardrobe with easy mix-and-match pieces.</div>
+        </article>
+
+        <article class="card">
+          <h3>Gen Z street &amp; campus</h3>
+          <p>Oversized, gender-neutral, and trend-heavy pieces for reels, campus, and late-night plans.</p>
+          <div class="card-tags">
+            <span class="tag">Oversized tees</span>
+            <span class="tag">Cargo pants</span>
+            <span class="tag">Co-ord sets</span>
+            <span class="tag">Hoodies</span>
+          </div>
+          <div class="card-cta">Pair with chunky sneakers, caps, and layered chains.</div>
+        </article>
+
+        <article class="card">
+          <h3>Accessories &amp; essentials</h3>
+          <p>Finish the look with shoes, watches, belts, and bags tailored to every vibe.</p>
+          <div class="card-tags">
+            <span class="tag">Sneakers &amp; loafers</span>
+            <span class="tag">Heels &amp; flats</span>
+            <span class="tag">Analog &amp; smart watches</span>
+            <span class="tag">Belts, caps &amp; bags</span>
+          </div>
+          <div class="card-cta">Because no outfit is complete without the right details.</div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Traditional section -->
+    <section id="traditional">
+      <h2>Indian traditional fits</h2>
+      <p class="section-subtitle">
+        From sarees to kurta sets, celebrate every festival and function with outfits rooted in Indian tradition.
+      </p>
+
+      <div class="product-row">
+        <div class="product-card">
+          <h4>Assamese-inspired mekhela chador</h4>
+          <div class="product-meta">
+            <span>Silk blend</span>
+            <span>Festive / wedding</span>
+          </div>
+          <div class="product-price">From ₹1,999</div>
+        </div>
+
+        <div class="product-card">
+          <h4>Classic saree edit</h4>
+          <div class="product-meta">
+            <span>Cotton · Georgette · Silk</span>
+            <span>Daily to heavy</span>
+          </div>
+          <div class="product-price">From ₹799</div>
+        </div>
+
+        <div class="product-card">
+          <h4>Kurta &amp; pajama sets</h4>
+          <div class="product-meta">
+            <span>Men &amp; women</span>
+            <span>Kurta · churidar</span>
+          </div>
+          <div class="product-price">From ₹999</div>
+        </div>
+
+        <div class="product-card">
+          <h4>Lehenga &amp; gown edit</h4>
+          <div class="product-meta">
+            <span>Bridal &amp; party</span>
+            <span>Handwork details</span>
+          </div>
+          <div class="product-price">From ₹2,499</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Western section -->
+    <section id="western">
+      <h2>Western &amp; indo-western</h2>
+      <p class="section-subtitle">
+        Jeans, shirts, and dresses plus fusion outfits that mix western cuts with Indian prints and detailing.[web:7]
+      </p>
+
+      <div class="product-row">
+        <div class="product-card">
+          <h4>Denim &amp; pants hub</h4>
+          <div class="product-meta">
+            <span>Straight · slim · baggy</span>
+            <span>Unisex fits</span>
+          </div>
+          <div class="product-price">From ₹999</div>
+        </div>
+
+        <div class="product-card">
+          <h4>Shirts &amp; tops</h4>
+          <div class="product-meta">
+            <span>Solid &amp; printed</span>
+            <span>Office / casual</span>
+          </div>
+          <div class="product-price">From ₹699</div>
+        </div>
+
+        <div class="product-card">
+          <h4>Western dresses</h4>
+          <div class="product-meta">
+            <span>Bodycon · A-line</span>
+            <span>Brunch / party</span>
+          </div>
+          <div class="product-price">From ₹1,299</div>
+        </div>
+
+        <div class="product-card">
+          <h4>Indo-western sets</h4>
+          <div class="product-meta">
+            <span>Kurta + denim</span>
+            <span>Drape skirts</span>
+          </div>
+          <div class="product-price">From ₹1,499</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gen Z section -->
+    <section id="genz">
+      <h2>Gen Z street &amp; campus</h2>
+      <p class="section-subtitle">
+        Oversized fits, cargos, co-ords, and gender-neutral pieces designed for reels, concerts, and chill days.[web:6]
+      </p>
+
+      <div class="product-row">
+        <div class="product-card">
+          <h4>Oversized graphic tees</h4>
+          <div class="product-meta">
+            <span>Bold prints</span>
+            <span>Unisex</span>
+          </div>
+          <div class="product-price">From ₹599</div>
+        </div>
+
+        <div class="product-card">
+          <h4>Cargo &amp; parachute pants</h4>
+          <div class="product-meta">
+            <span>Multiple pockets</span>
+            <span>Streetwear</span>
+          </div>
+          <div class="product-price">From ₹1,099</div>
+        </div>
+
+        <div class="product-card">
+          <h4>Co-ord sets</h4>
+          <div class="product-meta">
+            <span>Unisex co-ords</span>
+            <span>Airport / campus</span>
+          </div>
+          <div class="product-price">From ₹1,499</div>
+        </div>
+
+        <div class="product-card">
+          <h4>Hoodies &amp; sweatshirts</h4>
+          <div class="product-meta">
+            <span>Fleece &amp; cotton</span>
+            <span>Layering</span>
+          </div>
+          <div class="product-price">From ₹1,299</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Accessories section -->
+    <section id="accessories">
+      <h2>Shoes, watches &amp; more</h2>
+      <p class="section-subtitle">
+        Every outfit needs the right shoes, watches, and small details – from sneakers to ethnic footwear and classic watches.[web:1][web:8]
+      </p>
+
+      <div class="product-row">
+        <div class="product-card">
+          <h4>Street sneakers</h4>
+          <div class="product-meta">
+            <span>Chunky &amp; low-top</span>
+            <span>Unisex</span>
+          </div>
+          <div class="product-price">From ₹1,499</div>
+        </div>
+
+        <div class="product-card">
+          <h4>Ethnic footwear</h4>
+          <div class="product-meta">
+            <span>Juttis &amp; mojaris</span>
+            <span>Heels &amp; flats</span>
+          </div>
+          <div class="product-price">From ₹899</div>
+        </div>
+
+        <div class="product-card">
+          <h4>Watches edit</h4>
+          <div class="product-meta">
+            <span>Analog &amp; smart</span>
+            <span>Metal &amp; leather</span>
+          </div>
+          <div class="product-price">From ₹1,299</div>
+        </div>
+
+        <div class="product-card">
+          <h4>Extras &amp; details</h4>
+          <div class="product-meta">
+            <span>Belts, caps, bags</span>
+            <span>Unisex</span>
+          </div>
+          <div class="product-price">From ₹499</div>
+        </div>
+      </div>
+
+      <div class="chip-row">
+        <span class="chip">Campus essentials</span>
+        <span class="chip">Party-ready fits</span>
+        <span class="chip">Minimal daily wear</span>
+        <span class="chip">Festival specials</span>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container footer-row">
+      <div>
+        © 2026 Himkristelle &amp; Nilovelle · Built with love from Assam.
+      </div>
+      <div class="footer-links">
+        <a href="#collections">Browse</a>
+        <a href="#genz">New drops</a>
+        <a href="#accessories">Essentials</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function scrollToSection(id) {
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  </script>
+</body>
+</html>
